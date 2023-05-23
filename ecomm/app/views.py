@@ -1,10 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from .models import *
+from django.views import View
 
-def home(request):
- return render(request, 'app/home.html')
+# def home(request):
+#  return render(request, 'app/home.html')
+class ProductView(View):
+    def get(Self, request):
+     topwears = Product.objects.filter(category='TW')
+     bottomwears = Product.objects.filter(category='BW')
+     electronics = Product.objects.filter(category='E')
+     accessories = Product.objects.filter(category='A')
+     return render(request,'app/home.html',
+                   {'topwears': topwears, 'bottomwears' : bottomwears, 'electronics': electronics, 'accessories' : accessories})
 
 def product_detail(request):
- return render(request, 'app/productdetail.html')
+ products = Product.objects.all()
+ context = { 'products':products}
+ return render(request, 'app/productdetail.html',context)
 
 def add_to_cart(request):
  return render(request, 'app/addtocart.html')
@@ -35,3 +47,12 @@ def customerregistration(request):
 
 def checkout(request):
  return render(request, 'app/checkout.html')
+
+
+ 
+
+
+ 
+ 
+ 
+ 

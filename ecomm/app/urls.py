@@ -3,7 +3,8 @@ from app import views
 from django.conf.urls.static import static
 from django.conf import settings
 urlpatterns = [
-    path('', views.home),
+    # path('', views.home),
+    path('',views.ProductView.as_view(),name='home'),
     path('product-detail/', views.product_detail, name='product-detail'),
     path('cart/', views.add_to_cart, name='add-to-cart'),
     path('buy/', views.buy_now, name='buy-now'),
@@ -16,3 +17,4 @@ urlpatterns = [
     path('registration/', views.customerregistration, name='customerregistration'),
     path('checkout/', views.checkout, name='checkout'),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
