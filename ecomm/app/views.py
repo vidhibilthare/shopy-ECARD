@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import *
 from django.views import View
+from django.db.models import Q
 
 # def home(request):
 #  return render(request, 'app/home.html')
@@ -13,10 +14,23 @@ class ProductView(View):
      return render(request,'app/home.html',
                    {'topwears': topwears, 'bottomwears' : bottomwears, 'electronics': electronics, 'accessories' : accessories})
 
-def product_detail(request):
- products = Product.objects.all()
- context = { 'products':products}
- return render(request, 'app/productdetail.html',context)
+# def product_detail(request):
+#  products = Product.objects.all()
+#  context = { 'products':products}
+#  return render(request, 'app/productdetail.html',context)
+
+class ProductDetailView(View):
+    def get(self, request, pk):
+        product = Product.objects.get(pk=pk)
+        item_already_in_cart = False
+        if request.user.is_authenticated:
+            item_already_in_cart = Cart.objects.filter(
+                Q(product=product.id) & Q(user=request.user)).exists()
+            return render(request, 'app/productdetail.html', {'product': product, 'item_already_in_cart': item_already_in_cart})
+        else:
+            return render(request, 'app/productdetail.html', {'product': product, 'item_already_in_cart': item_already_in_cart})
+     
+ 
 
 def add_to_cart(request):
  return render(request, 'app/addtocart.html')
