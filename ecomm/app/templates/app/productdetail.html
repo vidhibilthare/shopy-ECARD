@@ -11,8 +11,8 @@
    <h2>Product Title: {{product.title}}</h2>
    <hr>
    <p>Product Description: {{product.description}}</p> <br>
-   <h4>Rs. {{product.selling_price}}<small class="fw-light text-decoration-line-through">Rs. {{ product.discount_price}}</small></h4> <br>
-  
+   <h4>Rs. {{product.discounted_price}}<small class="fw-light text-decoration-line-through">Rs. {{product.selling_price}}</small></h4> <br>
+   
    {% if request.user.is_authenticated %}
    {% if item_already_in_cart %}
     <a href="{% url 'showcart' %}" class="btn btn-warning shadow px-5 py-2 ms-4">Go to Cart</a>
@@ -29,6 +29,10 @@
     <button type="submit" class="btn btn-primary shodow px-5 py-2">Add To Cart</button>
     </form>
    {% endif %}
+   
+   
+
+
    <a href="{% url 'checkout' %}" class="btn btn-danger shadow px-5 py-2 ms-4">Buy Now</a>
    <h5 class="mt-5">Available Offers</h5>
    <ul>
@@ -41,8 +45,3 @@
  </div>
 </div>
 {% endblock main-content %}
-   
-   
-
-
-   
